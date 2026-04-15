@@ -27,17 +27,19 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ vehicles, tracks
             <path
               d={track.path}
               fill="none"
-              stroke={track.status === 'open' ? '#1E1E22' : '#450a0a'}
+              stroke={track.status === 'open' ? '#22C55E' : '#EF4444'}
               strokeWidth="12"
+              strokeOpacity="0.1"
               strokeLinecap="round"
             />
             <path
               d={track.path}
               fill="none"
-              stroke={track.status === 'open' ? '#2D2D31' : '#EF4444'}
-              strokeWidth="2"
-              strokeDasharray="8 8"
+              stroke={track.status === 'open' ? '#22C55E' : '#EF4444'}
+              strokeWidth="3"
+              strokeDasharray={track.status === 'open' ? "none" : "8 8"}
               strokeLinecap="round"
+              className={track.status === 'open' ? '' : 'animate-pulse'}
             />
           </g>
         ))}
@@ -92,12 +94,12 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ vehicles, tracks
       {/* Legend */}
       <div className="absolute bottom-4 left-4 flex flex-col gap-2 p-3 bg-surface/80 backdrop-blur-sm border border-border-theme rounded-lg text-[10px] font-mono text-text-secondary">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-1 bg-border-theme rounded-full" />
-          <span>VIA LIBERADA</span>
+          <div className="w-3 h-1 bg-status-online rounded-full" />
+          <span className="text-green-800 font-bold">VIA LIBERADA</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-1 bg-status-alert rounded-full" />
-          <span>VIA BLOQUEADA</span>
+          <span className="text-red-600 font-bold">VIA BLOQUEADA</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-sm bg-accent-theme" />

@@ -89,10 +89,10 @@ export const TowerDashboard: React.FC = () => {
                     <span className="text-[13px] font-medium text-text-primary">{track.name}</span>
                     <button 
                       onClick={() => toggleTrack(track.id)}
-                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all ${
+                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border-2 transition-all ${
                         track.status === 'open' 
-                          ? 'bg-status-online/10 text-status-online border-status-online' 
-                          : 'bg-status-alert/10 text-status-alert border-status-alert'
+                          ? 'bg-status-online/20 text-status-online border-status-online shadow-[0_0_10px_rgba(34,197,94,0.2)]' 
+                          : 'bg-status-alert/20 text-status-alert border-status-alert shadow-[0_0_10px_rgba(239,68,68,0.2)]'
                       }`}
                     >
                       {track.status === 'open' ? 'ABERTO' : 'FECHADO'}

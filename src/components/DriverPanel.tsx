@@ -58,14 +58,14 @@ export const DriverPanel: React.FC = () => {
       </div>
 
       {/* Main Grid */}
-      <main className="flex-1 flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-6 p-4 lg:p-6 overflow-y-auto lg:overflow-hidden">
+      <main className="flex-1 flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-6 p-4 lg:p-6 overflow-y-auto min-h-0">
         {/* Left Column: Navigation & Route */}
         <div className="lg:col-span-8 flex flex-col gap-4 lg:gap-6">
           {/* Track Status Card */}
-          <div className={`flex-1 min-h-[300px] rounded-3xl border-2 lg:border-4 p-6 lg:p-8 flex flex-col items-center justify-center text-center transition-all duration-500 ${
+          <div className={`flex-1 min-h-[300px] rounded-3xl border-4 lg:border-8 p-6 lg:p-8 flex flex-col items-center justify-center text-center transition-all duration-500 ${
             trackStatus === 'clear' 
-              ? 'bg-status-online/5 border-status-online/20' 
-              : 'bg-status-alert/5 border-status-alert/20'
+              ? 'bg-status-online/15 border-status-online shadow-[0_0_40px_rgba(34,197,94,0.15)]' 
+              : 'bg-status-alert/15 border-status-alert shadow-[0_0_40px_rgba(239,68,68,0.15)]'
           }`}>
             <AnimatePresence mode="wait">
               {trackStatus === 'clear' ? (
@@ -79,8 +79,8 @@ export const DriverPanel: React.FC = () => {
                   <div className="w-24 h-24 lg:w-32 lg:h-32 bg-status-online rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(34,197,94,0.3)] mb-6 lg:mb-8">
                     <CheckCircle2 className="w-14 h-14 lg:w-20 lg:h-20 text-white" />
                   </div>
-                  <h1 className="text-4xl lg:text-6xl font-black mb-2 lg:mb-4 tracking-tighter">VIA LIBERADA</h1>
-                  <p className="text-base lg:text-xl text-status-online font-medium max-w-md">
+                  <h1 className="text-4xl lg:text-6xl font-black mb-2 lg:mb-4 tracking-tighter text-green-900">VIA LIBERADA</h1>
+                  <p className="text-base lg:text-xl text-green-800 font-medium max-w-md">
                     Trecho até o Porto de Ponta da Madeira sem restrições.
                   </p>
                 </motion.div>
@@ -95,8 +95,8 @@ export const DriverPanel: React.FC = () => {
                   <div className="w-24 h-24 lg:w-32 lg:h-32 bg-status-alert rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(239,68,68,0.3)] mb-6 lg:mb-8 animate-pulse">
                     <ShieldAlert className="w-14 h-14 lg:w-20 lg:h-20 text-white" />
                   </div>
-                  <h1 className="text-4xl lg:text-6xl font-black mb-2 lg:mb-4 tracking-tighter">VIA BLOQUEADA</h1>
-                  <p className="text-base lg:text-xl text-status-alert font-medium max-w-md">
+                  <h1 className="text-4xl lg:text-6xl font-black mb-2 lg:mb-4 tracking-tighter text-red-600">VIA BLOQUEADA</h1>
+                  <p className="text-base lg:text-xl text-red-700 font-medium max-w-md">
                     Pare imediatamente. Aguarde autorização da Torre de Controle.
                   </p>
                 </motion.div>
@@ -105,8 +105,7 @@ export const DriverPanel: React.FC = () => {
             
             <Button 
               onClick={() => setTrackStatus(prev => prev === 'clear' ? 'blocked' : 'clear')}
-              variant="outline" 
-              className="mt-8 lg:mt-12 border-border-theme text-text-secondary hover:bg-surface-accent h-10"
+              className="mt-8 lg:mt-12 border-2 border-accent-theme bg-surface-accent text-accent-theme font-black h-12 px-8 uppercase tracking-widest shadow-lg"
             >
               Simular Mudança de Via
             </Button>
