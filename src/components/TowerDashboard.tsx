@@ -9,7 +9,7 @@ import { InteractiveMap } from './InteractiveMap';
 import { VoIPCenter } from './VoIPCenter';
 import { TelemetryFeed } from './TelemetryFeed';
 import { TrackSection } from '../types';
-import { LayoutDashboard, Map as MapIcon, Settings, Bell, Search, Lock, Unlock } from 'lucide-react';
+import { LayoutDashboard, Map as MapIcon, Settings, Bell, Search, Lock, Unlock, Mic } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -47,36 +47,36 @@ export const TowerDashboard: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 grid grid-cols-[260px_1fr_300px] bg-border-theme gap-[1px] overflow-hidden">
-        {/* Left Sidebar: VoIP */}
-        <aside className="bg-surface flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col lg:grid lg:grid-cols-[260px_1fr_300px] bg-border-theme gap-[1px] overflow-hidden">
+        {/* Left Sidebar: VoIP - Hidden on mobile, shown on LG */}
+        <aside className="hidden lg:flex bg-surface flex-col overflow-hidden">
           <VoIPCenter drivers={MOCK_DRIVERS} />
         </aside>
 
-        {/* Center: Map */}
-        <section className="bg-[#0F0F11] relative p-4 flex flex-col gap-4">
-          <div className="flex-1 relative">
+        {/* Center: Map - Always shown, takes full width on mobile */}
+        <section className="flex-1 bg-[#0F0F11] relative p-2 lg:p-4 flex flex-col gap-4 overflow-hidden">
+          <div className="flex-1 relative min-h-[300px]">
             <InteractiveMap vehicles={MOCK_VEHICLES} tracks={tracks} />
           </div>
           
-          {/* Quick Stats */}
-          <div className="grid grid-cols-4 gap-4 h-20">
+          {/* Quick Stats - 2 columns on mobile, 4 on desktop */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 h-auto lg:h-20">
             {[
               { label: 'Veículos Ativos', value: '12', color: 'text-accent-theme' },
               { label: 'Alertas Ativos', value: '03', color: 'text-status-alert' },
               { label: 'Vias Bloqueadas', value: '01', color: 'text-amber-500' },
               { label: 'Operadores Online', value: '08', color: 'text-blue-500' },
             ].map((stat, i) => (
-              <div key={i} className="bg-surface border border-border-theme rounded-lg p-3 flex flex-col justify-center">
-                <p className="text-[10px] font-bold text-text-secondary uppercase tracking-wider">{stat.label}</p>
-                <p className={`text-xl font-black ${stat.color}`}>{stat.value}</p>
+              <div key={i} className="bg-surface border border-border-theme rounded-lg p-2 lg:p-3 flex flex-col justify-center">
+                <p className="text-[8px] lg:text-[10px] font-bold text-text-secondary uppercase tracking-wider">{stat.label}</p>
+                <p className={`text-lg lg:text-xl font-black ${stat.color}`}>{stat.value}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Right Sidebar: Controls & Telemetry */}
-        <aside className="bg-surface flex flex-col overflow-hidden border-l border-border-theme">
+        {/* Right Sidebar: Controls & Telemetry - Hidden on mobile, shown on LG */}
+        <aside className="hidden lg:flex bg-surface flex-col overflow-hidden border-l border-border-theme">
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="panel-header">Controle de Vias</div>
             <ScrollArea className="flex-1">
@@ -108,6 +108,22 @@ export const TowerDashboard: React.FC = () => {
           </div>
         </aside>
       </main>
+
+      {/* Mobile Navigation (Only visible on small screens) */}
+      <div className="lg:hidden h-14 bg-surface border-t border-border-theme flex items-center justify-around px-2">
+        <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-auto py-1 text-[10px] text-text-secondary">
+          <Mic className="w-4 h-4" />
+          VOIP
+        </Button>
+        <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-auto py-1 text-[10px] text-accent-theme">
+          <MapIcon className="w-4 h-4" />
+          MAPA
+        </Button>
+        <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-auto py-1 text-[10px] text-text-secondary">
+          <Settings className="w-4 h-4" />
+          VIAS
+        </Button>
+      </div>
 
       {/* Footer */}
       <footer className="h-7 bg-black border-t border-border-theme flex items-center justify-between px-5 text-[10px] text-text-secondary">

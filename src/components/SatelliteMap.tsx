@@ -23,8 +23,14 @@ interface SatelliteMapProps {
   vehicles: Vehicle[];
 }
 
-// Center of Ponta da Madeira, São Luís
-const CENTER: [number, number] = [-2.593, -44.364];
+// Center of Ponta da Madeira, São Luís (2° 33' 38" S, 44° 21' 44" W)
+const CENTER: [number, number] = [-2.560556, -44.362222];
+
+const PIERS = [
+  { name: 'Píer I', position: [-2.566667, -44.383333] as [number, number] },
+  { name: 'Píer III', position: [-2.561667, -44.379167] as [number, number] },
+  { name: 'Píer IV', position: [-2.551944, -44.379167] as [number, number] },
+];
 
 export const SatelliteMap: React.FC<SatelliteMapProps> = ({ vehicles }) => {
   // Map mock coordinates to real-world offsets
@@ -38,7 +44,7 @@ export const SatelliteMap: React.FC<SatelliteMapProps> = ({ vehicles }) => {
     <div className="w-full h-full rounded-xl overflow-hidden border border-border-theme shadow-2xl">
       <MapContainer 
         center={CENTER} 
-        zoom={14} 
+        zoom={15} 
         style={{ height: '100%', width: '100%', background: '#0A0A0B' }}
         zoomControl={false}
       >
@@ -51,8 +57,25 @@ export const SatelliteMap: React.FC<SatelliteMapProps> = ({ vehicles }) => {
         {/* Road/Label Overlay for better context */}
         <TileLayer
           url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.png"
-          opacity={0.5}
+          opacity={0.3}
         />
+
+        {/* Pier Markers */}
+        {PIERS.map((pier) => (
+          <Marker 
+            key={pier.name} 
+            position={pier.position}
+            icon={L.divIcon({
+              className: 'pier-icon',
+              html: `<div style="background: rgba(255,184,0,0.2); border: 2px solid #FFB800; width: 12px; height: 12px; border-radius: 50%;"></div>`,
+              iconSize: [12, 12]
+            })}
+          >
+            <Popup>
+              <div className="text-zinc-900 font-bold">{pier.name}</div>
+            </Popup>
+          </Marker>
+        ))}
 
         {vehicles.map((vehicle) => {
           const position = getRealCoords(vehicle.position);
